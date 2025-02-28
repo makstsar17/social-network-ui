@@ -1,13 +1,49 @@
 import React from "react"
 import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
-import App from "./App"
 import { store } from "./app/store"
 import "./index.css"
 import { HeroUIProvider } from "@heroui/react";
 import ThemeProvider from "./components/ThemeProvider"
+import Layout from "./components/Layout"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import CurrentPost from "./pages/CurrentPost"
+import Posts from "./pages/Posts"
+import UserProfile from "./pages/UserProfile"
+import Followers from "./pages/Followers"
+import Following from "./pages/Following"
 
 const container = document.getElementById("root")
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "",
+        element: <Posts />,
+      },
+      {
+        path: "posts/:id",
+        element: <CurrentPost />,
+      },
+      {
+        path: "users/:id",
+        element: <UserProfile />,
+      },
+      {
+        path: "followers",
+        element: <Followers />,
+      },
+      {
+        path: "following",
+        element: <Following />,
+      },
+
+    ]
+  }
+]);
 
 if (container) {
   const root = createRoot(container)
@@ -17,7 +53,7 @@ if (container) {
       <Provider store={store}>
         <HeroUIProvider>
           <ThemeProvider>
-            <App />
+            <RouterProvider router={router} />
           </ThemeProvider>
         </HeroUIProvider>
       </Provider>
