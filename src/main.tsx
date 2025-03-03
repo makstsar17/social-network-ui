@@ -12,10 +12,15 @@ import Posts from "./pages/Posts"
 import UserProfile from "./pages/UserProfile"
 import Followers from "./pages/Followers"
 import Following from "./pages/Following"
+import Auth from "./pages/Auth"
 
 const container = document.getElementById("root")
 
 const router = createBrowserRouter([
+  {
+    path: "/auth",
+    element: <Auth />
+  },
   {
     path: "/",
     element: <Layout />,
