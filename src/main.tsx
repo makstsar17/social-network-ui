@@ -5,7 +5,6 @@ import { store } from "./app/store"
 import "./index.css"
 import { HeroUIProvider } from "@heroui/react";
 import ThemeProvider from "./components/ThemeProvider"
-import Layout from "./components/Layout"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import CurrentPost from "./pages/CurrentPost"
 import Posts from "./pages/Posts"
@@ -13,6 +12,7 @@ import UserProfile from "./pages/UserProfile"
 import Followers from "./pages/Followers"
 import Following from "./pages/Following"
 import Auth from "./pages/Auth"
+import AuthGuard from "./features/authGuard"
 
 const container = document.getElementById("root")
 
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Layout />,
+    element: <AuthGuard />,
     children: [
       {
         path: "",

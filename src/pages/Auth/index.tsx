@@ -2,9 +2,16 @@ import { Card, CardBody, Tab, Tabs } from "@heroui/react";
 import { useState } from "react";
 import Login from "../../components/Login";
 import Register from "../../components/Register";
+import { useAppSelector } from "../../app/hooks";
+import { selectIsAuthenticated } from "../../features/userSlice";
+import { Navigate } from "react-router-dom";
 
 const Auth = () => {
     const [selected, setSelected] = useState("login");
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
+    if (isAuthenticated) {
+        return <Navigate to="/" />
+    }
 
     return (
         <div className="flex justify-center items-center h-screen w-full">

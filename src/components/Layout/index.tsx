@@ -2,8 +2,17 @@ import { Outlet } from "react-router-dom";
 import Container from "../Container";
 import Header from "../Header";
 import NavBar from "../NavBar";
+import { useCurrentQuery } from "../../app/services/userApi";
+import { Spinner } from "@heroui/react";
 
 const Layout = () => {
+
+    const { isLoading } = useCurrentQuery();
+
+    if (isLoading) {
+        return <Spinner size="lg" />
+    }
+
     return (
         <>
             <Header />

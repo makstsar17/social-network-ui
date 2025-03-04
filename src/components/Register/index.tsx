@@ -7,6 +7,9 @@ import NameInput from "../Input/Name"
 import EmailInput from "../Input/Email"
 import PasswordInput from "../Input/Password"
 import { Button, Link } from "@heroui/react"
+import { useRegisterMutation } from "../../app/services/authApi"
+import { hasErrorField, hasErrorsField } from "../../utils/hasErrorField"
+import ErrorMessage from "../ErrorMessage"
 
 type PropsType = {
     setSelected: (value: string) => void
@@ -36,7 +39,8 @@ const validationSchema = yup.object().shape({
 })
 
 const Register = ({ setSelected }: PropsType) => {
-    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string>();
+    const [errors, setErrors] = useState<[{ msg: string }]>();
 
     const { control, handleSubmit } = useForm<FormValues>({
         defaultValues: {
@@ -49,10 +53,20 @@ const Register = ({ setSelected }: PropsType) => {
         resolver: yupResolver(validationSchema)
     })
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
-        setIsLoading(true);
-        console.log(data)
-        setIsLoading(false);
+    const [register, { isLoading }] = useRegisterMutation();
+
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+        try {
+            await register(data).unwrap()
+            setSelected("login")
+        } catch (err) {
+            if (hasErrorField(err)) {        
+                setError(err.data.error);
+            }
+            else if (hasErrorsField(err)) {
+                setErrors(err.data.errors);
+            }
+        }
     }
 
     return (
@@ -60,6 +74,9 @@ const Register = ({ setSelected }: PropsType) => {
             <NameInput name="name" control={control} />
             <EmailInput name="email" control={control} />
             <PasswordInput name="password" control={control} />
+
+            <ErrorMessage error={error} errors={errors} />
+
             <p className="text-center text-small">
                 Already have an account?{" "}
                 <Link className="cursor-pointer" onPress={() => setSelected("login")}>
