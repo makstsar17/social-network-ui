@@ -27,4 +27,18 @@ export type UserLogin = {
 
 export type LoginResult = {
     token: string
-} 
+}
+
+export type Post = {
+    id: string,
+    content: string,
+    userId: string,
+    likes: string[],
+    comments: string[],
+    createdAt: Date,
+    likedByUser?: boolean
+}
+
+export type CreatePost = {
+    content: string
+}

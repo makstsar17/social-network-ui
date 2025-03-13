@@ -6,7 +6,7 @@ type PropsType = {
 
 const Container = ({ children }: PropsType) => {
     return (
-        <div className="flex max-w-2xl mt-10 mx-auto">
+        <div className="flex max-w-screen-xl mt-10 mx-auto">
             {children}
         </div>
     )
