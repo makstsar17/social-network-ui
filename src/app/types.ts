@@ -32,13 +32,22 @@ export type LoginResult = {
 export type Post = {
     id: string,
     content: string,
-    userId: string,
+    user: {
+        id: string,
+        email: string,
+        name: string,
+        avatarUrl: string
+    },
     likes: string[],
     comments: string[],
     createdAt: Date,
-    likedByUser?: boolean
+    likedByUser: boolean
 }
 
 export type CreatePost = {
     content: string
+}
+
+export type ID = {
+    id: string
 }

@@ -6,7 +6,7 @@ import { Button } from "@heroui/react";
 import { useState } from "react";
 import { GiFeather } from "react-icons/gi";
 import ErrorMessage from "../ErrorMessage";
-import { useCreatePostMutation } from "../../app/services/postApi";
+import { useCreatePostMutation, useLazyGetAllPostsQuery } from "../../app/services/postApi";
 import { hasErrorField } from "../../utils/hasErrorField";
 
 
@@ -23,9 +23,10 @@ const validationSchema = yup.object().shape({
 const CreatePostFrom = () => {
     const [error, setError] = useState("");
 
-    const [createPost, {isLoading}] = useCreatePostMutation();
+    const [createPost, { isLoading }] = useCreatePostMutation();
+    const [triggerGetPosts] = useLazyGetAllPostsQuery();
 
-    const {control, handleSubmit, setValue} = useForm<FormValues>({
+    const { control, handleSubmit, setValue } = useForm<FormValues>({
         defaultValues: {
             content: ""
         },
@@ -38,16 +39,17 @@ const CreatePostFrom = () => {
         try {
             await createPost(data).unwrap();
             setValue("content", "");
+            await triggerGetPosts().unwrap();
         } catch (err) {
-            if(hasErrorField(err)){
+            if (hasErrorField(err)) {
                 setError(err.data.error);
             }
         }
     };
 
     return <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
-        <Textarea control={control} placeholder="What's happening?"/>
-        <ErrorMessage error={error}/>
+        <Textarea control={control} placeholder="What's happening?" />
+        <ErrorMessage error={error} />
         <Button
             className="self-end"
             type="submit"
