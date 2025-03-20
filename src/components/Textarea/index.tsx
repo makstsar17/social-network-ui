@@ -5,9 +5,10 @@ type PropsType = {
     control: Control<any>
     name?: string
     placeholder: string
+    variant?: "flat" | "bordered" | "faded" | "underlined"
 }
 
-const Textarea = ({ control, name = "content", placeholder }: PropsType) => {
+const Textarea = ({ control, name = "content", placeholder, variant }: PropsType) => {
     const {
         field: { value, onChange, onBlur },
         fieldState: { invalid },
@@ -25,7 +26,7 @@ const Textarea = ({ control, name = "content", placeholder }: PropsType) => {
             isClearable
             minRows={3}
             maxRows={6}
-            variant="faded"
+            variant={variant}
         />
     )
 }

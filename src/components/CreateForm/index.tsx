@@ -8,23 +8,35 @@ import { GiFeather } from "react-icons/gi";
 import ErrorMessage from "../ErrorMessage";
 import { useCreatePostMutation, useLazyGetAllPostsQuery } from "../../app/services/postApi";
 import { hasErrorField } from "../../utils/hasErrorField";
+import { useCreateCommentMutation, useLazyGetCommentsQuery } from "../../app/services/commentApi";
 
 
 type FormValues = {
-    content: string
+    content: string,
+    postId?: string
 }
 
 const validationSchema = yup.object().shape({
     content: yup.string()
         .required("Write content before creating post")
-        .max(280, "Post must be maximum 280 characters long")
+        .max(280, "Post must be maximum 280 characters long"),
+    postId: yup.string()
+        .optional()
+        .length(24, "PosId must be 24 characters long")
 })
 
-const CreatePostFrom = () => {
+type PropsType =
+    | { type: "post" }
+    | { type: "comment", postId: string }
+
+const CreatePostFrom = (props: PropsType) => {
     const [error, setError] = useState("");
 
-    const [createPost, { isLoading }] = useCreatePostMutation();
+    const [createPost, { isLoading: isLoadingPost }] = useCreatePostMutation();
     const [triggerGetPosts] = useLazyGetAllPostsQuery();
+
+    const [createComment, { isLoading: isLoadingComment }] = useCreateCommentMutation();
+    const [triggerGetComments] = useLazyGetCommentsQuery();
 
     const { control, handleSubmit, setValue } = useForm<FormValues>({
         defaultValues: {
@@ -35,11 +47,23 @@ const CreatePostFrom = () => {
         resolver: yupResolver(validationSchema)
     });
 
+
+
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         try {
-            await createPost(data).unwrap();
+            switch (props.type) {
+                case "post":
+                    await createPost(data).unwrap();
+                    await triggerGetPosts().unwrap();
+                    break;
+                case "comment":
+                    await createComment({
+                        ...data,
+                        postId: props.postId
+                    }).unwrap();
+                    await triggerGetComments({ id: props.postId }).unwrap;
+            }
             setValue("content", "");
-            await triggerGetPosts().unwrap();
         } catch (err) {
             if (hasErrorField(err)) {
                 setError(err.data.error);
@@ -48,7 +72,10 @@ const CreatePostFrom = () => {
     };
 
     return <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
-        <Textarea control={control} placeholder="What's happening?" />
+        <Textarea
+            control={control}
+            placeholder={props.type === "post" ? "What's happening?" : "Post your reply"}
+            variant={props.type === "post" ? "faded" : "underlined"} />
         <ErrorMessage error={error} />
         <Button
             className="self-end"
@@ -56,9 +83,9 @@ const CreatePostFrom = () => {
             color="secondary"
             variant="bordered"
             endContent={<GiFeather />}
-            isLoading={isLoading}
+            isLoading={props.type === "post" ? isLoadingPost : isLoadingComment}
         >
-            Post
+            {props.type === "post" ? "Post" : "Reply"} "What's happening?"
         </Button>
     </form>
 }

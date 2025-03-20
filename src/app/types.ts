@@ -51,3 +51,20 @@ export type CreatePost = {
 export type ID = {
     id: string
 }
+
+export type Comment = {
+    id: string
+    content: string,
+    postId: string,
+    user: {
+        id: string,
+        email: string,
+        name: string,
+        avatarUrl: string
+    },
+}
+
+export type CreateComment = {
+    content: string,
+    postId: string
+}
