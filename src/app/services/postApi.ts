@@ -32,13 +32,22 @@ export const postApi = api.injectEndpoints({
                 url: `posts/unlike/${id}`,
                 method: "PATCH"
             })
+        }),
+        getPostById: builder.query<Post, ID>({
+            query: ({ id }) => ({
+                url: `posts/${id}`
+            })
         })
     })
 });
 
-export const { useCreatePostMutation,
+export const {
+    useCreatePostMutation,
     useGetAllPostsQuery,
     useLazyGetAllPostsQuery,
     useDeletePostMutation,
     useLikePostMutation,
-    useUnlikePostMutation } = postApi;
+    useUnlikePostMutation,
+    useGetPostByIdQuery,
+    useLazyGetPostByIdQuery
+} = postApi;

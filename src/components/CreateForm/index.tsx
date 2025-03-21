@@ -85,7 +85,7 @@ const CreatePostFrom = (props: PropsType) => {
             endContent={<GiFeather />}
             isLoading={props.type === "post" ? isLoadingPost : isLoadingComment}
         >
-            {props.type === "post" ? "Post" : "Reply"} "What's happening?"
+            {props.type === "post" ? "Post" : "Reply"}
         </Button>
     </form>
 }
