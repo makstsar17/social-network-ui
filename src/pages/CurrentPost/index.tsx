@@ -6,6 +6,7 @@ import CreatePostFrom from "../../components/CreateForm";
 import { Spinner } from "@heroui/react";
 import { useGetCommentsQuery } from "../../app/services/commentApi";
 import ThreadPost from "../../components/ThreadPost";
+import GoBack from "../../components/GoBack";
 
 const CurrentPost = () => {
     const { id } = useParams<{ id: string }>();
@@ -33,6 +34,8 @@ const CurrentPost = () => {
     }
 
     return (
+        <>
+        <GoBack />
         <div className="flex flex-col gap-5">
             <SinglePost
                 author={author}
@@ -57,6 +60,7 @@ const CurrentPost = () => {
                 )
             )}
         </div>
+        </>
     )
 }
 
