@@ -90,21 +90,24 @@ const ThreadPost = (props: PropsType) => {
     return (
         <Card shadow="lg">
             <CardBody className="flex flex-row justify-between">
-                <div className="flex">
-                    <Avatar
-                        className="flex-none mr-2"
-                        src={`${baseUrl}${author.avatarUrl}`}
-                        size="md"
-                        isBordered
-                        showFallback
-                    />
+                <div className="flex items-start">
+                    <Link to={`/users/${author.authorId}`} className="flex-none mr-2">
+                        <Avatar
+                            src={`${baseUrl}${author.avatarUrl}`}
+                            size="md"
+                            isBordered
+                            showFallback
+                        />
+                    </Link>
                     <div className="flex flex-col">
-                        <div className="inline-flex items-center gap-1 text-small mb-3">
-                            <span className="text-inherit font-bold">{author.name}</span>
-                            <span className="text-foreground-400">{author.email}</span>
+                        <div className="inline-flex items-end gap-1 text-small mb-3">
+                            <Link to={`/users/${author.authorId}`} className="inline-flex gap-1">
+                                <span className="text-inherit font-bold">{author.name}</span>
+                                <span className="text-foreground-400">{author.email}</span>
+                            </Link>
                             {props.type === "post" &&
                                 <>
-                                    <span className="text-foreground-400"> &#9679; </span>
+                                    <span className="text-foreground-400 text-tiny self-center"> &#9679; </span>
                                     <span className="text-foreground-400">{dateDiff(props.createdAt)}</span>
                                 </>
                             }
