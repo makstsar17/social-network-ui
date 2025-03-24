@@ -4,10 +4,10 @@ import { Link } from "react-router-dom"
 import MetaInfo from "../MetaInfo"
 import { FaHeart, FaRegComment, FaRegHeart } from "react-icons/fa"
 import { MdDeleteOutline } from "react-icons/md"
-import { useDeletePostMutation, useLazyGetAllPostsQuery, useLikePostMutation, useUnlikePostMutation } from "../../app/services/postApi"
+import { useDeletePostMutation, useLikePostMutation, useUnlikePostMutation } from "../../app/services/postApi"
 import { hasErrorField } from "../../utils/hasErrorField"
 import { useState } from "react"
-import { useDeleteCommentMutation, useLazyGetCommentsQuery } from "../../app/services/commentApi"
+import { useDeleteCommentMutation } from "../../app/services/commentApi"
 import { useAppSelector } from "../../app/hooks"
 import { selectCurrentUser } from "../../features/userSlice"
 import ErrorMessage from "../ErrorMessage"
@@ -41,10 +41,8 @@ type PropsType = CommentProps | PostProps
 const ThreadPost = (props: PropsType) => {
     const [likePost] = useLikePostMutation();
     const [unlikePost] = useUnlikePostMutation();
-    const [triggerGetPosts] = useLazyGetAllPostsQuery();
     const [deletePost, { isLoading: isLoadingDeletePost }] = useDeletePostMutation();
     const [deleteComment, { isLoading: isLoadingDeleteComment }] = useDeleteCommentMutation();
-    const [triggerGetComments] = useLazyGetCommentsQuery();
 
     const [error, setError] = useState("");
 
@@ -60,7 +58,6 @@ const ThreadPost = (props: PropsType) => {
                 await unlikePost({ id }).unwrap() :
                 await likePost({ id }).unwrap();
 
-            await triggerGetPosts().unwrap();
         } catch (err) {
             if (hasErrorField(err)) {
                 setError(err.data.error);
@@ -73,11 +70,9 @@ const ThreadPost = (props: PropsType) => {
             switch (props.type) {
                 case "post":
                     await deletePost({ id }).unwrap();
-                    await triggerGetPosts().unwrap();
                     break;
                 case "comment":
                     await deleteComment({ id }).unwrap();
-                    await triggerGetComments({ id: props.postId }).unwrap();
                     break;
             }
         } catch (err) {

@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Spinner } from "@heroui/react";
 import Avatar from "../Avatar";
-import { useDeletePostMutation, useLazyGetPostByIdQuery, useLikePostMutation, useUnlikePostMutation } from "../../app/services/postApi";
+import { useDeletePostMutation, useLikePostMutation, useUnlikePostMutation } from "../../app/services/postApi";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { hasErrorField } from "../../utils/hasErrorField";
@@ -44,7 +44,6 @@ const SinglePost = ({
     const [deletePost, { isLoading }] = useDeletePostMutation();
     const [likePost] = useLikePostMutation();
     const [unlikePost] = useUnlikePostMutation();
-    const [triggerGetPostById] = useLazyGetPostByIdQuery();
 
     const navigate = useNavigate();
 
@@ -68,7 +67,6 @@ const SinglePost = ({
             likedByUser ?
                 await unlikePost({ id }).unwrap() :
                 await likePost({ id }).unwrap();
-            await triggerGetPostById({ id }).unwrap();
         } catch (err) {
             console.error(err);
             if (hasErrorField(err)) {

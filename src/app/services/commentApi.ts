@@ -8,18 +8,21 @@ export const commentApi = api.injectEndpoints({
                 url: "comments",
                 method: "POST",
                 body: data
-            })
+            }),
+            invalidatesTags: ["Comment"]
         }),
         getComments: builder.query<Comment[], ID>({
             query: ({ id }) => ({
                 url: `comments?postId=${id}`
-            })
+            }),
+            providesTags: ["Comment"]
         }),
         deleteComment: builder.mutation<void, ID>({
             query: ({ id }) => ({
                 url: `comments/${id}`,
                 method: "DELETE"
-            })
+            }),
+            invalidatesTags: ["Comment"]
         })
     })
 });

@@ -6,9 +6,9 @@ import { Button } from "@heroui/react";
 import { useState } from "react";
 import { GiFeather } from "react-icons/gi";
 import ErrorMessage from "../ErrorMessage";
-import { useCreatePostMutation, useLazyGetAllPostsQuery } from "../../app/services/postApi";
+import { useCreatePostMutation } from "../../app/services/postApi";
 import { hasErrorField } from "../../utils/hasErrorField";
-import { useCreateCommentMutation, useLazyGetCommentsQuery } from "../../app/services/commentApi";
+import { useCreateCommentMutation } from "../../app/services/commentApi";
 
 
 type FormValues = {
@@ -33,10 +33,8 @@ const CreatePostFrom = (props: PropsType) => {
     const [error, setError] = useState("");
 
     const [createPost, { isLoading: isLoadingPost }] = useCreatePostMutation();
-    const [triggerGetPosts] = useLazyGetAllPostsQuery();
 
     const [createComment, { isLoading: isLoadingComment }] = useCreateCommentMutation();
-    const [triggerGetComments] = useLazyGetCommentsQuery();
 
     const { control, handleSubmit, setValue } = useForm<FormValues>({
         defaultValues: {
@@ -54,14 +52,12 @@ const CreatePostFrom = (props: PropsType) => {
             switch (props.type) {
                 case "post":
                     await createPost(data).unwrap();
-                    await triggerGetPosts().unwrap();
                     break;
                 case "comment":
                     await createComment({
                         ...data,
                         postId: props.postId
                     }).unwrap();
-                    await triggerGetComments({ id: props.postId }).unwrap;
             }
             setValue("content", "");
         } catch (err) {
