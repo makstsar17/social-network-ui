@@ -3,7 +3,7 @@ import Container from "../Container";
 import Header from "../Header";
 import NavBar from "../NavBar";
 import { useCurrentQuery } from "../../app/services/userApi";
-import { Spinner } from "@heroui/react";
+import Spinner from "../Spinner";
 import Profile from "../Profile";
 
 const Layout = () => {
@@ -11,7 +11,7 @@ const Layout = () => {
     const { isLoading } = useCurrentQuery();
 
     if (isLoading) {
-        return <Spinner size="lg" />
+       return <Spinner />;
     }
 
     return (

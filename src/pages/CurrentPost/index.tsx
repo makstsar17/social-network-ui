@@ -3,16 +3,19 @@ import { useGetPostByIdQuery } from "../../app/services/postApi";
 import ErrorMessage from "../../components/ErrorMessage";
 import SinglePost from "../../components/SinglePost";
 import CreatePostFrom from "../../components/CreateForm";
-import { Spinner } from "@heroui/react";
 import { useGetCommentsQuery } from "../../app/services/commentApi";
 import ThreadPost from "../../components/ThreadPost";
 import GoBack from "../../components/GoBack";
+import Spinner from "../../components/Spinner";
 
 const CurrentPost = () => {
     const { id } = useParams<{ id: string }>();
     const { data: post, isLoading: isLoadingPost } = useGetPostByIdQuery({ id: id ? id : "" });
     const { data: comments, isLoading: isLoadingComment } = useGetCommentsQuery({ id: id ? id : "" })
 
+    if (isLoadingPost) {
+        return <Spinner />
+    }
 
     if (!post) {
         return <ErrorMessage error="Can't find post" />
@@ -28,10 +31,6 @@ const CurrentPost = () => {
     } = post;
 
     const author = { authorId, name, email, avatarUrl };
-
-    if (isLoadingPost) {
-        return <Spinner />
-    }
 
     return (
         <>

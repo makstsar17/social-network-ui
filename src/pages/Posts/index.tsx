@@ -1,7 +1,8 @@
-import { Divider, Spinner } from "@heroui/react";
+import { Divider } from "@heroui/react";
 import { useGetAllPostsQuery } from "../../app/services/postApi";
 import ThreadPost from "../../components/ThreadPost";
 import CreatePostFrom from "../../components/CreateForm";
+import Spinner from "../../components/Spinner";
 
 
 const Posts = () => {
@@ -11,7 +12,7 @@ const Posts = () => {
         <div className="min-w-[200px] w-full flex flex-col gap-3">
             <CreatePostFrom type="post"/>
             <Divider className="my-5" />
-            {isLoading && <Spinner color="secondary" />}
+            {isLoading && <Spinner />}
             {(data && data.length > 0) &&
                 data.map(({ user, content, createdAt, id, likes, comments, likedByUser }) => <ThreadPost
                     key={id}
