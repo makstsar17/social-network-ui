@@ -58,5 +58,5 @@ export const api = createApi({
     baseQuery: baseQuerywithRetry,
     refetchOnMountOrArgChange: true,
     endpoints: () => ({}),
-    tagTypes: ["Post", "Comment"]
+    tagTypes: ["User", "Post", "Comment"]
 })
