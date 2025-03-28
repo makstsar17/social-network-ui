@@ -55,12 +55,12 @@ const UserProfile = () => {
 
     const baseUrl = import.meta.env.VITE_API_URL;
 
-    const handleFollow = () => {
+    const handleFollow = async () => {
         try {
             if (id) {
                 isFollowing ?
-                    unfollowUser({ id }).unwrap() :
-                    followUser({ id }).unwrap();
+                    await unfollowUser({ id }).unwrap() :
+                    await followUser({ id }).unwrap();
             }
         } catch (err) {
             console.error(err);
