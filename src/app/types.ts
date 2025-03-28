@@ -3,11 +3,11 @@ export type User = {
     email: string,
     name: string,
     avatarUrl: string,
-    dateOfBirth?: Date | null,
+    dateOfBirth?: Date,
     createdAt: Date,
-    updatedAt?: Date | null,
-    bio?: string | null,
-    location?: string | null,
+    updatedAt?: Date,
+    bio?: string,
+    location?: string,
     posts: string[],
     followers: string[],
     following: string[],
@@ -67,4 +67,13 @@ export type Comment = {
 export type CreateComment = {
     content: string,
     postId: string
+}
+
+export type UpdateUser = {
+    email: string,
+    name: string,
+    dateOfBirth: Date,
+    bio: string,
+    location: string,
+    avatar: File
 }

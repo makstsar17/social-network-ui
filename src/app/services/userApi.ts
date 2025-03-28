@@ -1,4 +1,4 @@
-import type { ID, User } from "../types";
+import type { ID, UpdateUser, User } from "../types";
 import { api } from "./api";
 
 export const userApi = api.injectEndpoints({
@@ -6,7 +6,8 @@ export const userApi = api.injectEndpoints({
         current: builder.query<User, void>({
             query: () => ({
                 url: "users"
-            })
+            }),
+            providesTags: ["User"]
         }),
         getUserbyId: builder.query<User, ID>({
             query: ({ id }) => ({
@@ -27,6 +28,23 @@ export const userApi = api.injectEndpoints({
                 method: "PATCH"
             }),
             invalidatesTags: ["User"]
+        }),
+        updateUser: builder.mutation<User, Partial<UpdateUser> & Pick<User, "id">>({
+            query: ({ id, ...data }) => {
+                const formData = new FormData();
+                Object.keys(data).forEach(attr => {
+                    const key = attr as keyof UpdateUser;
+                    const value = data[key];
+                    if (value)
+                        formData.append(attr, value as string | Blob);
+                });
+                return {
+                    url: `users/${id}`,
+                    method: "PATCH",
+                    body: formData,
+                }
+            },
+            invalidatesTags: ["User"]
         })
     })
 });
@@ -37,5 +55,6 @@ export const {
     useGetUserbyIdQuery,
     useLazyGetUserbyIdQuery,
     useFollowMutation,
-    useUnfollowMutation
+    useUnfollowMutation,
+    useUpdateUserMutation
 } = userApi;

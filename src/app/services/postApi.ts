@@ -48,7 +48,7 @@ export const postApi = api.injectEndpoints({
             query: ({ id }) => ({
                 url: `posts?userId=${id}`
             }),
-            providesTags: ["Post"]
+            providesTags: ["Post", "User"]
         })
     })
 });

@@ -9,3 +9,10 @@ export function dateDiff(date: Date): string {
 export function yearsDiff(date: Date): number {
     return differenceInYears(new Date(), date);
 }
+
+export function getYesterday(): Date {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setHours(0);
+    return yesterday;
+}

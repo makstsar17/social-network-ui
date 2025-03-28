@@ -6,9 +6,12 @@ type PropsType = {
     name?: string
     placeholder: string
     variant?: "flat" | "bordered" | "faded" | "underlined"
+    classNames?: Object
+    label?: string,
+    displayErrorMessage?: boolean
 }
 
-const Textarea = ({ control, name = "content", placeholder, variant }: PropsType) => {
+const Textarea = ({ control, name = "content", placeholder, variant, classNames, label, displayErrorMessage = true }: PropsType) => {
     const {
         field: { value, onChange, onBlur },
         fieldState: { invalid },
@@ -17,11 +20,14 @@ const Textarea = ({ control, name = "content", placeholder, variant }: PropsType
 
     return (
         <HeroTextarea
+            classNames={classNames}
+            label={label}
+            labelPlacement="outside"
             value={value}
             onValueChange={onChange}
             onBlur={onBlur}
             isInvalid={invalid}
-            errorMessage={`${errors[name]?.message}`}
+            errorMessage={displayErrorMessage && `${errors[name]?.message}`}
             placeholder={placeholder}
             isClearable
             minRows={3}

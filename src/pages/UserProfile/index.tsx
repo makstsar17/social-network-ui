@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardHeader, Divider, Image } from "@heroui/react";
+import { Button, Card, CardBody, CardHeader, Divider, Image, useDisclosure } from "@heroui/react";
 import GoBack from "../../components/GoBack";
 import { useParams } from "react-router-dom";
 import { useFollowMutation, useGetUserbyIdQuery, useUnfollowMutation } from "../../app/services/userApi";
@@ -14,6 +14,7 @@ import ProfileInfo from "../../components/ProfileInfo";
 import { useGetPostsByUserQuery } from "../../app/services/postApi";
 import Spinner from "../../components/Spinner";
 import ThreadPost from "../../components/ThreadPost";
+import EditProfile from "../../components/EditProfile";
 
 const UserProfile = () => {
     const { id } = useParams<{ id: string }>();
@@ -22,6 +23,8 @@ const UserProfile = () => {
     const { data: posts, isLoading: isLoadingPosts } = useGetPostsByUserQuery({ id: id ? id : "" })
     const [followUser, { isLoading: isLoadingFollow }] = useFollowMutation();
     const [unfollowUser, { isLoading: isLoadingUnfollow }] = useUnfollowMutation();
+
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
     const currentUser = useAppSelector(selectCurrentUser);
     if (!currentUser) {
@@ -56,8 +59,8 @@ const UserProfile = () => {
         try {
             if (id) {
                 isFollowing ?
-                    unfollowUser({id}).unwrap() :
-                    followUser({id}).unwrap();
+                    unfollowUser({ id }).unwrap() :
+                    followUser({ id }).unwrap();
             }
         } catch (err) {
             console.error(err);
@@ -73,7 +76,7 @@ const UserProfile = () => {
                         <CountInfo title="Followers" count={followersCount} />
                         <CountInfo title="Following" count={followingCount} />
                     </div>
-                    <div className="absolute left-[50%] -translate-x-[50%] -top-20">
+                    <div className="absolute left-[50%] -translate-x-[50%] -top-20 z-1">
                         <Image
                             alt="User avatar"
                             src={`${baseUrl}${avatarUrl}`}
@@ -86,7 +89,7 @@ const UserProfile = () => {
                     </div>
                     <div className="">
                         {currentUser.id === id ?
-                            <Button className="text-xl" color="secondary">
+                            <Button className="text-xl" color="secondary" onPress={onOpen}>
                                 Edit
                             </Button> :
                             <Button className="text-xl" color="secondary" onPress={handleFollow} isLoading={isLoadingFollow || isLoadingUnfollow}>
@@ -107,6 +110,7 @@ const UserProfile = () => {
                     }
                 </CardBody>
             </Card>
+            <EditProfile isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose} user={currentUser} />
             <Divider className="my-5 bg-secondary-500" />
             {isLoadingPosts && <Spinner />}
             <div className="flex flex-col gap-3">
