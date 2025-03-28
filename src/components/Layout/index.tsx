@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import Container from "../Container";
 import Header from "../Header";
 import NavBar from "../NavBar";
@@ -8,10 +8,12 @@ import Profile from "../Profile";
 
 const Layout = () => {
 
-    const { isLoading } = useCurrentQuery();
+    const { data, isLoading } = useCurrentQuery();
+    const { id: paramsId } = useParams<{ id: string }>();
+    const userId = data?.id;
 
     if (isLoading) {
-       return <Spinner />;
+        return <Spinner />;
     }
 
     return (
@@ -24,9 +26,12 @@ const Layout = () => {
                 <div className="flex-1 p-4">
                     <Outlet />
                 </div>
-                <div className="flex-2 p-4">
-                    <Profile />
-                </div>
+                {
+                    userId !== paramsId &&
+                    <div className="flex-2 p-4">
+                        <Profile />
+                    </div>
+                }
             </Container>
         </>
     );
