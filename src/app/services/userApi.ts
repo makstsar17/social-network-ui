@@ -45,6 +45,18 @@ export const userApi = api.injectEndpoints({
                 }
             },
             invalidatesTags: ["User"]
+        }),
+        getFollowers: builder.query<User[], void>({
+            query: () => ({
+                url: "users/followers"
+            }),
+            providesTags: ["User"]
+        }),
+        getFollowings: builder.query<User[], void>({
+            query: () => ({
+                url: "users/followings"
+            }),
+            providesTags: ["User"]
         })
     })
 });
@@ -56,5 +68,7 @@ export const {
     useLazyGetUserbyIdQuery,
     useFollowMutation,
     useUnfollowMutation,
-    useUpdateUserMutation
+    useUpdateUserMutation,
+    useGetFollowersQuery,
+    useGetFollowingsQuery
 } = userApi;

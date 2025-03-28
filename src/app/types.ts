@@ -11,7 +11,7 @@ export type User = {
     posts: string[],
     followers: string[],
     following: string[],
-    isFollowing?: boolean,
+    isFollowing: boolean,
 }
 
 export type UserRegister = {
