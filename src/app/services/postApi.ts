@@ -49,6 +49,11 @@ export const postApi = api.injectEndpoints({
                 url: `posts?userId=${id}`
             }),
             providesTags: ["Post", "User"]
+        }),
+        getPostsByFollowings: builder.query<Post[], void>({
+            query: () => ({
+                url: `posts/following`
+            })
         })
     })
 });
@@ -62,5 +67,6 @@ export const {
     useUnlikePostMutation,
     useGetPostByIdQuery,
     useLazyGetPostByIdQuery,
-    useGetPostsByUserQuery
+    useGetPostsByUserQuery,
+    useGetPostsByFollowingsQuery
 } = postApi;
