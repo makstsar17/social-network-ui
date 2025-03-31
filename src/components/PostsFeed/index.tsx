@@ -10,21 +10,18 @@ type PropsType = {
 }
 
 const PostsFeed = ({ data, isLoading }: PropsType) => {
-    if (data.length === 0) {
-        return (
-            <div className="flex flex-col items-center text-secondary gap-1 mt-8">
-                <BsFillFileTextFill size={70} />
-                <h1 className="flex-1 text-center text-bold text-2xl">No Posts Yet</h1>
-            </div>
-        )
-    }
-
     return (
         <div className="min-w-[200px] w-full flex flex-col gap-3">
             <CreatePostFrom type="post" />
             <Divider className="my-5" />
             {isLoading && <Spinner />}
-            {(data && data.length > 0) &&
+            {(data.length === 0) &&
+                <div className="flex flex-col items-center text-secondary gap-1 mt-4">
+                    <BsFillFileTextFill size={70} />
+                    <h1 className="flex-1 text-center text-bold text-2xl">No Posts Yet</h1>
+                </div>
+            }
+            {(data.length > 0) &&
                 data.map(({ user, content, createdAt, id, likes, comments, likedByUser }) => <ThreadPost
                     key={id}
                     author={{
