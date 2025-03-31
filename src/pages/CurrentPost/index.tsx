@@ -48,11 +48,16 @@ const CurrentPost = () => {
             <CreatePostFrom type="comment" postId={postId} />
             {isLoadingComment && <Spinner />}
             {comments && comments.map(
-                ({ content, id }) => (
+                ({ content, id, user }) => (
                     <ThreadPost
                         type="comment"
                         content={content}
-                        author={author}
+                        author={{
+                            authorId: user.id,
+                            name: user.name,
+                            email: user.email,
+                            avatarUrl: user.avatarUrl
+                        }}
                         id={id}
                         postId={postId}
                     />
