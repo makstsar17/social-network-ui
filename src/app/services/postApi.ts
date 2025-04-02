@@ -53,7 +53,8 @@ export const postApi = api.injectEndpoints({
         getPostsByFollowings: builder.query<Post[], void>({
             query: () => ({
                 url: `posts/following`
-            })
+            }),
+            providesTags: ["Post"]
         })
     })
 });
