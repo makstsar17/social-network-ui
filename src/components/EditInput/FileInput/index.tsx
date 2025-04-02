@@ -28,7 +28,7 @@ const FileInput = ({ name }: PropsType) => {
             <label className="font-medium">Avatar</label>
             <label
                 htmlFor={name}
-                className={"py-2 px-3 border-medium rounded-medium cursor-pointer text-center w-fit" +
+                className={"py-2 px-3 border-medium rounded-medium cursor-pointer text-center w-fit max-w-[200px] line-clamp-1" +
                     `${validationError ? " border-danger bg-danger-50" : " bg-default-100 border-default-200 hover:border-default-400"}` +
                     `${selectedFileName ? " text-foreground-700" : " text-foreground-500"}`
                 }>
