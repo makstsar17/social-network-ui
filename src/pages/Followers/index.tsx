@@ -1,4 +1,5 @@
 import { useGetFollowersQuery } from "../../app/services/userApi";
+import EmptyFollowList from "../../components/EmptyFollowList";
 import Spinner from "../../components/Spinner";
 import UserCard from "../../components/UserCard";
 
@@ -10,6 +11,9 @@ const Followers = () => {
 
     if (!data)
         return null;
+
+    if(data.length === 0)
+        return <EmptyFollowList content="Followers"/> 
 
     return (
        <UserCard data={data}/>
