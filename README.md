@@ -1,27 +1,88 @@
-# vite-template-redux
+# Social Network Frontend
 
-Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library) to create a modern [React](https://react.dev/) app compatible with [Create React App](https://create-react-app.dev/)
+This is the frontend for the Social Network app, built using React and Vite.
 
-```sh
-npx degit reduxjs/redux-templates/packages/vite-template-redux my-app
-```
+## Features
 
-## Goals
+### Authentication & User Management
+- User registration and login
+- Authentication with JWT
+- Profile management (update avatar, bio, location, etc.)
+- Follow and unfollow users
+- View followers and following lists
 
-- Easy migration from Create React App or Vite
-- As beginner friendly as Create React App
-- Optimized performance compared to Create React App
-- Customizable without ejecting
+### Posts Management
+- Create and delete posts
+- View all posts or posts from followed users
+- Like and unlike posts
 
-## Scripts
+### Comments Management
+- Add and delete comments on posts
+- View comments for each post
 
-- `dev`/`start` - start dev server and open browser
-- `build` - build for production
-- `preview` - locally preview production build
-- `test` - launch test runner
+### Navigation & UI
+- UI designed with Hero UI
+- Client-side routing with React Router
+- Form handling with React Hook Form and validation with Yup
 
-## Inspiration
+## Technologies Used
+- React
+- Vite
+- Redux Toolkit (for state management and API interaction)
+- Hero UI (for UI components)
+- React Hook Form (for form handling)
+- React Router Dom (for navigation)
 
-- [Create React App](https://github.com/facebook/create-react-app/tree/main/packages/cra-template)
-- [Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react)
-- [Vitest](https://github.com/vitest-dev/vitest/tree/main/examples/react-testing-lib)
+## Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/makstsar17/social-network-ui.git
+   cd social-network-ui
+   ```
+
+2. Install dependencies using npm or yarn:
+   ```sh
+   npm install
+   ```
+   or
+   ```sh
+   yarn install
+   ```
+
+3. Create a `.env` file in the root directory. You can use the provided `.env.example` file as a template:
+   ```sh
+   cp .env.example .env 
+   ```
+   Then, update the `.env` file with your configuration:
+   ```env
+   VITE_API_URL=your_backend_api_url
+   ```
+
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
+   or
+   ```sh
+   yarn dev
+   ```
+
+5. Locally preview the production build:
+   ```sh
+   npm run build
+   npm run preview
+   ```
+   or with Yarn:
+   ```sh
+   yarn build
+   yarn preview
+   ```
+
+## Demo
+
+
+
+## License
+
+This project is licensed under the MIT License.
