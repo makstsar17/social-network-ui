@@ -81,7 +81,7 @@ This is the frontend for the Social Network app, built using React and Vite.
 
 ## Demo
 
-
+https://github.com/user-attachments/assets/42785fa4-dc22-4acc-b8fa-b10d83e512d7
 
 ## License
 
