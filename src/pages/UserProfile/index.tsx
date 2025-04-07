@@ -15,6 +15,7 @@ import { useGetPostsByUserQuery } from "../../app/services/postApi";
 import Spinner from "../../components/Spinner";
 import ThreadPost from "../../components/ThreadPost";
 import EditProfile from "../../components/EditProfile";
+import { getAvatarUrl } from "../../utils/formatAvatarUrl";
 
 const UserProfile = () => {
     const { id } = useParams<{ id: string }>();
@@ -53,7 +54,7 @@ const UserProfile = () => {
         isFollowing
     } = user;
 
-    const baseUrl = import.meta.env.VITE_API_URL;
+    const baseUrl = getAvatarUrl();
 
     const handleFollow = async () => {
         try {

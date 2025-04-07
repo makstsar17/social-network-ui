@@ -3,6 +3,7 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { selectCurrentUser } from "../../features/userSlice";
+import { getAvatarUrl } from "../../utils/formatAvatarUrl";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Profile = () => {
     const onPress = () => {
         navigate(`/users/${id}`);
     }
-    const baseUrl = import.meta.env.VITE_API_URL;
+    const baseUrl = getAvatarUrl();
 
     return (
         <Card

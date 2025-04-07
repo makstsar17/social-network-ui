@@ -11,6 +11,7 @@ import { useDeleteCommentMutation } from "../../app/services/commentApi"
 import { useAppSelector } from "../../app/hooks"
 import { selectCurrentUser } from "../../features/userSlice"
 import ErrorMessage from "../ErrorMessage"
+import { getAvatarUrl } from "../../utils/formatAvatarUrl"
 
 type BaseProps = {
     author: {
@@ -48,7 +49,7 @@ const ThreadPost = (props: PropsType) => {
 
     const currentUser = useAppSelector(selectCurrentUser);
 
-    const baseUrl = import.meta.env.VITE_API_URL;
+    const baseUrl = getAvatarUrl();
     const { author, content, id } = props;
     const isLoading = props.type === "post" ? isLoadingDeletePost : isLoadingDeleteComment;
 

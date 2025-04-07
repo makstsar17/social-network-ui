@@ -1,5 +1,6 @@
 import { User } from "@heroui/react";
 import { Link } from "react-router-dom";
+import { getAvatarUrl } from "../../utils/formatAvatarUrl";
 
 type PropsType = {
     id: string,
@@ -9,7 +10,7 @@ type PropsType = {
 }
 
 const Avatar = ({ id, name, email, avatarUrl }: PropsType) => {
-    const baseUrl = import.meta.env.VITE_API_URL;
+    const baseUrl = getAvatarUrl();
     return (
         <Link to={`/users/${id}`}>
             <User
